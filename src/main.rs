@@ -32,7 +32,7 @@ fn main() -> Result<(), Box<dyn Error>> {
   let mut stdout = io::stdout();
   terminal::enable_raw_mode()?;
   stdout.execute(EnterAlternateScreen)?;
-  let _ = stdout.execute(Hide);
+  stdout.execute(Hide)?;
 
   let (render_tx, render_rx) = mpsc::channel();
   let render_handle = thread::spawn(move || {
