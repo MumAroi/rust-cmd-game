@@ -16,6 +16,12 @@ pub struct Invaders {
     direction: i32,
 }
 
+impl Default for Invaders {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl Invaders {
     pub fn new() -> Self {
         let mut army = Vec::new();

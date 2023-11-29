@@ -39,14 +39,18 @@ fn main() -> Result<(), Box<dyn Error>> {
         let mut last_frame = frame::new_frame();
         let mut stdout = io::stdout();
         render::render(&mut stdout, &last_frame, &last_frame, true);
-        loop {
-            let curr_frame = match render_rx.recv() {
-                Ok(x) => x,
-                Err(_) => break,
-            };
-            render::render(&mut stdout, &last_frame, &curr_frame, false);
-            last_frame = curr_frame;
+        while let Ok(x) = render_rx.recv() {
+            render::render(&mut stdout, &last_frame, &x, false);
+            last_frame = x;
         }
+        // loop {
+        //     let curr_frame = match render_rx.recv() {
+        //         Ok(x) => x,
+        //         Err(_) => break,
+        //     };
+        //     render::render(&mut stdout, &last_frame, &curr_frame, false);
+        //     last_frame = curr_frame;
+        // }
     });
     let mut player = Player::new();
     let mut instant = Instant::now();
